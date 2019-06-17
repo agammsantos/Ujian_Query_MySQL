@@ -1,0 +1,34 @@
+Poin 1:
+mssql> select * from city where CountryCode='IDN' order by CAST(Population as unsigned) DESC limit 10;
+
+Poin 2:
+mssql> create view negara (Code,CountryName) as select Code,Name from country;
+mysql> select ID,Name,District,Population,CountryName from
+    -> city join negara
+    -> on city.CountryCode=negara.Code
+    -> order by CAST(Population as unsigned) DESC limit 10;
+
+Poin 3:
+mssql> select Code,Name,Continent,Region,IndepYear from country where IndepYear!='NULL' order by IndepYear ASC limit 10;
+
+Poin 4:
+mssql> create view benua (Benua,Jumlah_Negara,Populasi,Rata_AngkaHrpnHdp) as select Continent,count(Continent),sum(Population),avg(LifeExpectancy) from country group by Continent;
+mssql> select * from benua where Rata_AngkaHrpnHdp!='NULL' order by Populasi DESC limit 10;
+
+Poin 5:
+mssql> select Name,Continent,LifeExpectancy,GNP from country where Continent='Asia' and LifeExpectancy>(select avg(LifeExpectancy) from country where Continent='Europe') order by LifeExpectancy DESC limit 10;
+
+Poin 6:
+mysql> select CountryCode,Name,Language,IsOfficial,Percentage from
+    -> countrylanguage join country
+    -> on countrylanguage.CountryCode=country.Code
+    -> where Language='English' and IsOfficial='T' order by Percentage DESC limit 10;
+
+Poin 7:
+mysql> create view asean (Negara_Asean,Populasi_Negara,GNP,Ibukota,Populasi_Ibukota) as select country.Name,country.Population,GNP,city.Name,city.Population from
+    -> country join city
+    -> on city.CountryCode=country.Code
+    -> where Region='Southeast Asia' and city.Name!='Ho Chi Minh City' and city.Name!='Quezon'
+    -> group by country.Name;
+mssql> select * from asean;
+
