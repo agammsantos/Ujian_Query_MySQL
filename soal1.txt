@@ -32,3 +32,11 @@ mysql> create view asean (Negara_Asean,Populasi_Negara,GNP,Ibukota,Populasi_Ibuk
     -> group by country.Name;
 mssql> select * from asean;
 
+Poin 8:
+mysql> create view g20 (Negara_G20,Populasi_Negara,GNP,Ibukota,Populasi_Ibukota) as select country.Name,country.Population,GNP,city.Name,city.Population from
+    -> country join city
+    -> on city.CountryCode=country.Code
+    -> where city.Name='Buenos Aires' or city.Name='Canberra' or city.Name='BrasÃ­lia' or city.Name='Ottawa' or city.Name='Peking'
+    -> or city.Name='Paris' or city.Name='Berlin' or city.Name='New Delhi' or city.Name='Jakarta' or city.Name='Roma' or city.Name='Tokyo' or city.Name='Ciudad de MÃ©xico' or city.Name='Moscow' or city.Name='Riyadh'
+    -> or city.Name='Pretoria' or city.Name='Seoul' or city.Name='Ankara' or (city.Name='London' and country.Name='United Kingdom') or city.Name='Washington';
+mysql> select * from g20;
